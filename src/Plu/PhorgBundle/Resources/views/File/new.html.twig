@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <h2>New file.</h2>
+    Since Files have no content yet; not much to do.
+
+    <form action="{{ path( 'file_create') }}">
+        <input type="submit" value="Create"/>
+    </form>
+{% endblock %}
