@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    {% for file in files %}
+        <h2>{{ file.id }}</h2>
+        <ul>
+            {% for tag in file.tags %}
+                <li>{{ tag.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+
+{% endblock %}
