@@ -28,6 +28,19 @@ class File
      */
     private $tags;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="StringMeta", mappedBy="file")
+     */
+    private $stringMeta;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="DateMeta", mappedBy="file")
+     */
+    private $dateMeta;
 
     /**
      * Get id
@@ -66,6 +79,40 @@ class File
             $out[] = $fileTag->getTag();
         }
         return $out;
+    }
+
+    /**
+     * @param \Plu\PhorgBundle\Entity\ArrayCollection $stringMeta
+     */
+    public function setStringMeta($stringMeta)
+    {
+        $this->stringMeta = $stringMeta;
+        return $this;
+    }
+
+    /**
+     * @return \Plu\PhorgBundle\Entity\ArrayCollection
+     */
+    public function getStringMeta()
+    {
+        return $this->stringMeta;
+    }
+
+    /**
+     * @param \Plu\PhorgBundle\Entity\ArrayCollection $dateMeta
+     */
+    public function setDateMeta($dateMeta)
+    {
+        $this->dateMeta = $dateMeta;
+        return $this;
+    }
+
+    /**
+     * @return \Plu\PhorgBundle\Entity\ArrayCollection
+     */
+    public function getDateMeta()
+    {
+        return $this->dateMeta;
     }
 
 }

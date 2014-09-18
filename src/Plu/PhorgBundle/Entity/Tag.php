@@ -44,6 +44,13 @@ class Tag
     private $children;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="TagMeta", mappedBy="tag")
+     */
+    private $protoMeta;
+
+    /**
      * Get id
      *
      * @return integer
@@ -152,5 +159,35 @@ class Tag
         }
         return $out;
     }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $protoMeta
+     */
+    public function setProtoMeta($protoMeta)
+    {
+        $this->protoMeta = $protoMeta;
+        return $this;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getTagProtoMeta()
+    {
+        return $this->protoMeta;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getProtoMeta()
+    {
+        $out = array();
+        foreach ($this->protoMeta as $tagMeta) {
+            $out[] = $tagMeta->getProtoMeta();
+        }
+        return $out;
+    }
+
 
 }
