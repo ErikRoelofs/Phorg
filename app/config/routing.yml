@@ -1,0 +1,5 @@
+plu_phorg:
+    resource: "@PluPhorgBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
