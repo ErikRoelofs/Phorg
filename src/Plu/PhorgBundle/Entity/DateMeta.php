@@ -20,6 +20,11 @@ class DateMeta extends AbstractMeta
      */
     private $value;
 
+    public function __construct()
+    {
+        $this->value = new \DateTime();
+    }
+
     /**
      * Set value
      *

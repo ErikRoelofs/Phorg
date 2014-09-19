@@ -3,6 +3,7 @@
 namespace Plu\PhorgBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Proxies\__CG__\Plu\PhorgBundle\Entity\ProtoMeta;
 
 abstract class AbstractMeta
 {
@@ -110,6 +111,15 @@ abstract class AbstractMeta
     public function getTag()
     {
         return $this->tag;
+    }
+
+    public static function createFromProto(ProtoMeta $proto)
+    {
+        if ($proto->getType() == ProtoMeta::TYPE_DATE) {
+            return new DateMeta();
+        } elseif ($proto->getType() == ProtoMeta::TYPE_STRING) {
+            return new StringMeta();
+        }
     }
 
 }

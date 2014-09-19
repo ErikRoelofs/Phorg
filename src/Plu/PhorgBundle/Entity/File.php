@@ -2,6 +2,7 @@
 
 namespace Plu\PhorgBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,23 +25,30 @@ class File
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="FileTag", mappedBy="file")
+     * @ORM\OneToMany(targetEntity="FileTag", mappedBy="file", cascade={"persist"})
      */
     private $tags;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="StringMeta", mappedBy="file")
+     * @ORM\OneToMany(targetEntity="StringMeta", mappedBy="file", cascade={"persist"})
      */
     private $stringMeta;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="DateMeta", mappedBy="file")
+     * @ORM\OneToMany(targetEntity="DateMeta", mappedBy="file", cascade={"persist"})
      */
     private $dateMeta;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection(array());
+        $this->stringMeta = new ArrayCollection(array());
+        $this->dateMeta = new ArrayCollection(array());
+    }
 
     /**
      * Get id
@@ -67,6 +75,12 @@ class File
     public function getFileTags()
     {
         return $this->tags;
+    }
+
+    public function addFileTag(FileTag $tag)
+    {
+        $this->tags[] = $tag;
+        return $this;
     }
 
     /**
@@ -113,6 +127,15 @@ class File
     public function getDateMeta()
     {
         return $this->dateMeta;
+    }
+
+    public function addMeta(AbstractMeta $meta)
+    {
+        if ($meta instanceof DateMeta) {
+            $this->dateMeta[] = $meta;
+        } elseif ($meta instanceof StringMeta) {
+            $this->stringMeta[] = $meta;
+        }
     }
 
 }

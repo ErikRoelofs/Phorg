@@ -4,10 +4,28 @@
 
     <h1>{{ file.id }}</h1>
 
-    Available:
+    Attached tags:
+    <ul>
+        {% for tag in file.tags %}
+            <li>{{ tag.name }} <a href="{{ path( 'file_remove_tag', { file: file.id, tag: tag.id } ) }}">Remove</a></li>
+        {% endfor %}
+    </ul>
+
+    Attached meta:
+    <ul>
+        {% for meta in file.stringMeta %}
+            <li>{{ meta.value }} (for: {{ meta.proto.description }}, through: {{ meta.tag.name }})</li>
+        {% endfor %}
+        {% for meta in file.dateMeta %}
+            <li>{{ meta.value|date }} (for: {{ meta.proto.description }}, through: {{ meta.tag.name }})</li>
+        {% endfor %}
+
+    </ul>
+
+    Available tags:
     <ul>
         {% for tag in availableTags %}
-            <li>{{ tag.name }}</li>
+            <li>{{ tag.name }} <a href="{{ path( 'file_add_tag', { file: file.id, tag: tag.id } ) }}">Add</a></li>
         {% endfor %}
     </ul>
 

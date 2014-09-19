@@ -4,6 +4,7 @@ namespace Plu\PhorgBundle\Controller;
 
 use Plu\PhorgBundle\Editor\FileEditor;
 use Plu\PhorgBundle\Entity\File;
+use Plu\PhorgBundle\Entity\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -56,5 +57,34 @@ class FileController extends Controller
 
         return array('file' => $file, 'availableTags' => $tags);
     }
+
+    /**
+     * @Route("/file/{file}/tag/add/{tag}", name="file_add_tag")
+     */
+    public function addTagAction(File $file, Tag $tag)
+    {
+        $editor = new FileEditor($this->getDoctrine()->getManager());
+        if ($editor->canAddTag($file, $tag)) {
+            $editor->addTag($file, $tag);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        return $this->redirect($this->generateUrl("file_edit", array("id" => $file->getId())));
+    }
+
+    /**
+     * @Route("/file/{file}/tag/remove/{tag}", name="file_remove_tag")
+     */
+    public function removeTagAction(File $file, Tag $tag)
+    {
+        $editor = new FileEditor($this->getDoctrine()->getManager());
+        if ($editor->canRemoveTag($file, $tag)) {
+            $editor->removeTag($file, $tag);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        return $this->redirect($this->generateUrl("file_edit", array("id" => $file->getId())));
+    }
+
 
 }

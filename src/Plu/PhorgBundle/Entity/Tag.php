@@ -50,6 +50,14 @@ class Tag
      */
     private $protoMeta;
 
+    public function __construct()
+    {
+        $this->protoMeta = new ArrayCollection(array());
+        $this->children = new ArrayCollection(array());
+        $this->parents = new ArrayCollection(array());
+    }
+
+
     /**
      * Get id
      *
