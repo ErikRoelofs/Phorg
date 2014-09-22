@@ -3,7 +3,6 @@
 namespace Plu\PhorgBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Proxies\__CG__\Plu\PhorgBundle\Entity\ProtoMeta;
 
 abstract class AbstractMeta
 {

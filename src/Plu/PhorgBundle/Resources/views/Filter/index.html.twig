@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {% for filter in filters %}
+        <h2>{{ filter.name }}</h2>
+        With meta:
+        <ul>
+            {% for meta in filter.meta %}
+                <li>{{ meta.description }}</li>
+            {% endfor %}
+        </ul>
+        With tag:
+        <ul>
+            {% for tag in filter.tags %}
+                <li>{{ tag.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}

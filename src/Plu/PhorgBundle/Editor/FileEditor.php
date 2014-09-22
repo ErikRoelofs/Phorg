@@ -9,6 +9,7 @@ use Plu\PhorgBundle\Entity\File;
 use Plu\PhorgBundle\Entity\FileTag;
 use Plu\PhorgBundle\Entity\ProtoMeta;
 use Plu\PhorgBundle\Entity\Tag;
+use Plu\PhorgBundle\Tag\TagFinder;
 
 class FileEditor
 {
@@ -18,15 +19,21 @@ class FileEditor
      */
     private $em;
 
+    /**
+     * @var \Plu\PhorgBundle\Tag\TagFinder
+     */
+    private $tagFinder;
+
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+        $this->tagFinder = new TagFinder();
     }
 
     public function getAvailableTagsFor(File $file)
     {
         $repo = $this->em->getRepository("PluPhorgBundle:Tag");
-        $usedTags = $this->getAllTags($file);
+        $usedTags = $this->tagFinder->getAllTagsForFile($file);
         if ($usedTags == array()) {
             // doctrine bugs.
             return $repo->findAll();
@@ -129,22 +136,5 @@ class FileEditor
         return $currentMeta;
     }
 
-    private function getAllTags(File $file)
-    {
-        $list = array();
-        foreach ($file->getTags() as $tag) {
-            $list = $this->collectTags($tag, $list);
-        }
-        return $list;
-    }
-
-    private function collectTags(Tag $tag, $list)
-    {
-        $list[] = $tag;
-        foreach ($tag->getParents() as $parent) {
-            $list = $this->collectTags($parent, $list);
-        }
-        return $list;
-    }
 
 }
