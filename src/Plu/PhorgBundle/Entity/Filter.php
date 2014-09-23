@@ -140,4 +140,9 @@ class Filter
         return $out;
     }
 
+    public function addFilterTag(FilterTag $rel)
+    {
+        $this->tags->add($rel);
+    }
+
 }

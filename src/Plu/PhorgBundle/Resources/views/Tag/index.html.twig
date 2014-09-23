@@ -4,8 +4,9 @@
 
     {% for tag in tags %}
         <h2>{{ tag.fullname }}</h2>
+        <a href="{{ path( 'filter_run_simple', { id: tag.id } ) }}">find files</a><br/>
         {% if tag.children %}
-            My children:
+            My direct children:
             <ul>
                 {% for childRelation in tag.children %}
                     <li>{{ childRelation.name }}</li>

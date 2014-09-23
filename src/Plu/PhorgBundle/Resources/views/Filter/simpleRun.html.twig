@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <h2>Simple filter for</h2>
+    <h3>{{ tag.fullname }}</h3>
+
+    {% for file in files %}
+        <h2>{{ file.id }}</h2>
+        Tags:
+        <ul>
+            {% for tag in file.tags %}
+                <li>{{ tag.name }}</li>
+            {% endfor %}
+        </ul>
+
+        Meta:
+        <ul>
+            {% for meta in file.stringMeta %}
+                <li>{{ meta.value }} (for: {{ meta.proto.description }}, through: {{ meta.tag.name }})</li>
+            {% endfor %}
+            {% for meta in file.dateMeta %}
+                <li>{{ meta.value|date }} (for: {{ meta.proto.description }}, through: {{ meta.tag.name }})</li>
+            {% endfor %}
+
+        </ul>
+    {% endfor %}
+
+{% endblock %}

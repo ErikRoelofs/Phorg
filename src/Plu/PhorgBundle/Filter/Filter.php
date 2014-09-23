@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use \Plu\PhorgBundle\Entity\Filter as FilterEntity;
+use Plu\PhorgBundle\Entity\FilterTag;
+use Plu\PhorgBundle\Entity\Tag;
 use Plu\PhorgBundle\Tag\TagFinder;
 
 class Filter
@@ -35,7 +37,18 @@ class Filter
         $meta = $this->findMatchingByMeta($filter);
         $ids = $this->getFileIds($tags, $meta);
 
-        return $this->em->getRepository("PluPhorgBundle:File")->findBy(array( "id" => $ids));
+        return $this->em->getRepository("PluPhorgBundle:File")->findBy(array("id" => $ids));
+    }
+
+    public function findMatchingSimpleTag(Tag $tag)
+    {
+        $filter = new FilterEntity;
+        $rel = new FilterTag();
+        $rel->setTag($tag);
+        $rel->setFilter($filter);
+        $filter->addFilterTag($rel);
+
+        return $this->findMatching($filter);
     }
 
     private function findMatchingByTags(FilterEntity $filter)

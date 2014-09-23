@@ -35,5 +35,15 @@ class FilterController extends Controller
 
     }
 
+    /**
+     * @Route("/filter/simple/run/{id}", name="filter_run_simple")
+     * @Template()
+     */
+    public function simpleRunAction(Tag $tag)
+    {
+        $filterControl = new \Plu\PhorgBundle\Filter\Filter($this->getDoctrine()->getManager());
+        return array("tag" => $tag, "files" => $filterControl->findMatchingSimpleTag($tag));
+
+    }
 
 }
