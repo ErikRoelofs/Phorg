@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    {% for meta in protometa %}
+       <h2>{{ meta.description }}</h2>
+        {% if meta.type == 1 %}StringMeta{% endif %}
+        {% if meta.type == 2 %}DateMeta{% endif %}
+    {% endfor %}
+
+{% endblock %}

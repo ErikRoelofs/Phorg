@@ -2,7 +2,7 @@
 
 {% block body %}
     {% for filter in filters %}
-        <h2>{{ filter.name }}</h2>
+        <h2><a href="{{ path('filter_run', { id: filter.id } ) }}">{{ filter.name }}</a></h2>
         With meta:
         <ul>
             {% for meta in filter.meta %}

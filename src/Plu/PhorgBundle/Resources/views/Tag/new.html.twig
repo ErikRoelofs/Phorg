@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <form action="{{ path('tag_new') }}" method="post">
+        {{ form_widget(form) }}
+        <input type="submit" value="Save" />
+    </form>
+
+{% endblock %}

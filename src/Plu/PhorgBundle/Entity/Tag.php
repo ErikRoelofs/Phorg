@@ -156,6 +156,16 @@ class Tag
         return $parent;
     }
 
+    public function hasPrimaryParent()
+    {
+        foreach ($this->getParentRelations() as $parentRelation) {
+            if ($parentRelation->getPrimaryParent()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function getNonPrimaryParents()
     {
         $out = array();
@@ -197,5 +207,24 @@ class Tag
         return $out;
     }
 
+    public function getFullName()
+    {
+        $fullname = '';
+        if ($this->hasPrimaryParent()) {
+            $fullname .= $this->getPrimaryParent()->getFullName() . " \ ";
+        }
+        $fullname .= $this->getName();
+        return $fullname;
+    }
+
+    public function addChildRelation(TagRelation $rel)
+    {
+        $this->children->add($rel);
+    }
+
+    public function addParentRelation(TagRelation $rel)
+    {
+        $this->parents->add($rel);
+    }
 
 }

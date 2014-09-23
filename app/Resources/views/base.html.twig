@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+    <html>
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -7,7 +7,13 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    <ul>
+        <li><a href="{{ path('files') }}">files</a></li>
+        <li><a href="{{ path('filters') }}">filters</a></li>
+        <li><a href="{{ path('tags') }}">tags</a></li>
+        <li><a href="{{ path('protometa') }}">protometa</a></li>
+    </ul>
+    {% block body %}{% endblock %}
+    {% block javascripts %}{% endblock %}
     </body>
 </html>
