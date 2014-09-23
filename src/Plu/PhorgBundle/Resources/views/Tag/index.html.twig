@@ -3,20 +3,23 @@
 {% block body %}
 
     {% for tag in tags %}
-        <h2>{{ tag.name }}</h2>
-        My children:
-        <ul>
-            {% for childRelation in tag.children %}
-                <li>{{ childRelation.name }}</li>
-            {% endfor %}
-        </ul>
-        My parents:
-        <ul>
-            <li><b>{{ tag.primaryParent.name }}</b></li>
-            {% for parentRelation in tag.nonPrimaryParents %}
-                <li>{{ parentRelation.name }}</li>
-            {% endfor %}
-        </ul>
+        <h2>{{ tag.fullname }}</h2>
+        {% if tag.children %}
+            My children:
+            <ul>
+                {% for childRelation in tag.children %}
+                    <li>{{ childRelation.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if tag.nonPrimaryParents %}
+            My other parents:
+            <ul>
+                {% for parentRelation in tag.nonPrimaryParents %}
+                    <li>{{ parentRelation.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
     {% endfor %}
 
