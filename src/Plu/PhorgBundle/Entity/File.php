@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Plu\PhorgBundle\Entity\FileRepository")
  */
-class File
+class File implements TrackModifications
 {
     /**
      * @var integer
@@ -42,6 +42,11 @@ class File
      * @ORM\OneToMany(targetEntity="DateMeta", mappedBy="file", cascade={"persist"})
      */
     private $dateMeta;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $lastModification;
 
     public function __construct()
     {
@@ -136,6 +141,23 @@ class File
         } elseif ($meta instanceof StringMeta) {
             $this->stringMeta[] = $meta;
         }
+    }
+
+    /**
+     * @param mixed $lastModification
+     */
+    public function setLastModification($lastModification)
+    {
+        $this->lastModification = $lastModification;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastModification()
+    {
+        return $this->lastModification;
     }
 
 }

@@ -32,6 +32,16 @@ class FileController extends Controller
         return array();
     }
 
+
+    /**
+     * @Route("/derp", name="derp")
+     */
+    public function derpAction()
+    {
+        json_encode( )
+    }
+
+
     /**
      * @Route("/file/create", name="file_create")
      */

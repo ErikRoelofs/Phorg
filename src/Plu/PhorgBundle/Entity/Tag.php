@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Plu\PhorgBundle\Entity\TagRepository")
  */
-class Tag
+class Tag implements TrackModifications
 {
     /**
      * @var integer
@@ -49,6 +49,11 @@ class Tag
      * @ORM\OneToMany(targetEntity="TagMeta", mappedBy="tag")
      */
     private $protoMeta;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $lastModification;
 
     public function __construct()
     {
@@ -225,6 +230,23 @@ class Tag
     public function addParentRelation(TagRelation $rel)
     {
         $this->parents->add($rel);
+    }
+
+    /**
+     * @param mixed $lastModification
+     */
+    public function setLastModification($lastModification)
+    {
+        $this->lastModification = $lastModification;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastModification()
+    {
+        return $this->lastModification;
     }
 
 }

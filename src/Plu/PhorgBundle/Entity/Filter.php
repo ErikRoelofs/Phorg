@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Plu\PhorgBundle\Entity\FilterRepository")
  */
-class Filter
+class Filter implements TrackModifications
 {
     /**
      * @var integer
@@ -42,6 +42,11 @@ class Filter
      * @ORM\OneToMany(targetEntity="FilterMeta", mappedBy="filter")
      */
     private $meta;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $lastModification;
 
     public function __construct()
     {
@@ -143,6 +148,23 @@ class Filter
     public function addFilterTag(FilterTag $rel)
     {
         $this->tags->add($rel);
+    }
+
+    /**
+     * @param mixed $lastModification
+     */
+    public function setLastModification($lastModification)
+    {
+        $this->lastModification = $lastModification;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastModification()
+    {
+        return $this->lastModification;
     }
 
 }

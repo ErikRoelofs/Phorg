@@ -4,7 +4,7 @@ namespace Plu\PhorgBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-abstract class AbstractMeta
+abstract class AbstractMeta implements TrackModifications
 {
     /**
      * @var integer
@@ -35,6 +35,11 @@ abstract class AbstractMeta
      * @ORM\ManyToOne(targetEntity="Tag")
      */
     protected $tag;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $lastModification;
 
     /**
      * Get id
@@ -119,6 +124,23 @@ abstract class AbstractMeta
         } elseif ($proto->getType() == ProtoMeta::TYPE_STRING) {
             return new StringMeta();
         }
+    }
+
+    /**
+     * @param mixed $lastModification
+     */
+    public function setLastModification($lastModification)
+    {
+        $this->lastModification = $lastModification;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastModification()
+    {
+        return $this->lastModification;
     }
 
 }
